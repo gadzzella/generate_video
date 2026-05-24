@@ -12,8 +12,11 @@ jobs:
     steps:
       - name: Free disk space
         run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo docker system prune -af
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+          sudo rm -rf /usr/local/share/boost /usr/share/swift
           sudo apt-get clean
+          sudo apt-get autoremove -y
           df -h
 
       - name: Checkout repo
