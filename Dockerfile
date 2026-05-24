@@ -62,7 +62,7 @@ RUN wget -q https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_
 # ── Gated Dasiwa BoundBite v10 — requires HF token ────────────────────────────
 ARG HF_TOKEN
 COPY download_models.py /download_models.py
-RUN HF_TOKEN=${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} python /download_models.py
+RUN HF_TOKEN=${HF_TOKEN} python /download_models.py
 
 # ── Copy repo files ────────────────────────────────────────────────────────────
 COPY . .
