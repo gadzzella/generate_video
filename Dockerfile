@@ -49,17 +49,17 @@ ARG HF_TOKEN
 COPY download_models.py /download_models.py
 RUN HF_TOKEN=${HF_TOKEN} python /download_models.py
 # ── Download LoRAs ────────────────────────────────────────────────────────────
-RUN mkdir -p /ComfyUI/models/loras && \
-    HF_TOKEN=${HF_TOKEN} python -c " \
-from huggingface_hub import hf_hub_download; \
-import os; \
-os.makedirs('/ComfyUI/models/loras', exist_ok=True); \
-hf_hub_download('BillyInns/WAN_DR34ML4Y_All-In-One_NSFW', 'T2V_14b_HighNoise_v2.safetensors', local_dir='/ComfyUI/models/loras'); \
-hf_hub_download('BillyInns/WAN_DR34ML4Y_All-In-One_NSFW', 'T2V_14b_LowNoise_v2.safetensors', local_dir='/ComfyUI/models/loras'); \
-hf_hub_download('7777777sleep/CumFacial-Wan2.2-I2V', 'Wan22_CumV2_High.safetensors', local_dir='/ComfyUI/models/loras'); \
-hf_hub_download('7777777sleep/CumFacial-Wan2.2-I2V', 'Wan22_CumV2_Low.safetensors', local_dir='/ComfyUI/models/loras'); \
-print('LoRAs downloaded') \
-"
+# ── Download LoRAs ────────────────────────────────────────────────────────────
+RUN mkdir -p /ComfyUI/models/loras && HF_TOKEN=${HF_TOKEN} python << 'EOF'
+from huggingface_hub import hf_hub_download
+import os
+os.makedirs('/ComfyUI/models/loras', exist_ok=True)
+hf_hub_download('BillyInns/WAN_DR34ML4Y_All-In-One_NSFW', 'T2V_14b_HighNoise_v2.safetensors', local_dir='/ComfyUI/models/loras')
+hf_hub_download('BillyInns/WAN_DR34ML4Y_All-In-One_NSFW', 'T2V_14b_LowNoise_v2.safetensors', local_dir='/ComfyUI/models/loras')
+hf_hub_download('7777777sleep/CumFacial-Wan2.2-I2V', 'Wan22_CumV2_High.safetensors', local_dir='/ComfyUI/models/loras')
+hf_hub_download('7777777sleep/CumFacial-Wan2.2-I2V', 'Wan22_CumV2_Low.safetensors', local_dir='/ComfyUI/models/loras')
+print('LoRAs downloaded')
+EOF
 # ── Copy repo files ────────────────────────────────────────────────────────────
 COPY . .
 COPY extra_model_paths.yaml /ComfyUI/extra_model_paths.yaml
